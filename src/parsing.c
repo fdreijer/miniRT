@@ -6,7 +6,13 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2025/10/04 18:03:43 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/04 18:34:24 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "miniRT.h"
+
+void	parse_file(t_scene *scene, char *scene_file)
+{
+	
+}

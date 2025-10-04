@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2025/10/04 18:13:35 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/04 18:46:34 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define VOXEL_GRID_SIZE 10
 
-# include "libft.h"
+# include "libft/inc/libft.h"
 
 # include <stdio.h>
 # include <unistd.h>

@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:15 by kali              #+#    #+#             */
-/*   Updated: 2025/10/04 18:14:14 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/04 18:40:00 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ int main(void)
 
 	scene = ft_calloc(1, sizeof(t_scene));
 	(void)(scene && scene_file);
+	// parse_file(scene, scene_file);
 }
