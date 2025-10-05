@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 17:26:49 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 18:04:09 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 18:10:20 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	free_lights(t_light *lights)
 {
-	t_light *next;
-	
+	t_light	*next;
+
 	while (lights)
 	{
 		next = lights->next;
@@ -51,7 +51,7 @@ void	free_materials(t_object *objects)
 
 void	free_objects(t_object *objects)
 {
-	t_object *next;
+	t_object	*next;
 
 	while (objects)
 	{

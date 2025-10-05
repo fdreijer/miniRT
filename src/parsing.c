@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 17:49:36 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 18:11:41 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,25 +288,25 @@ int	parse_object(t_scene *scene, char **s)
 
 void	parse_line(t_scene *scene, char *line)
 {
-	char	**split;
+	char	**s;
 
 	if (!line || line[0] == '#' )
 		return ;
-	split = split_space(line);
-	if (!split || !split[0])
-		return (free_split(split));
-	else if (!ft_strcmp(split[0], "A") && !parse_ambient(split, &(scene->ambient)))
-		return (free_split(split), free_scene_exit(scene, "invalid ambient\n", 1));
-	else if (!ft_strcmp(split[0], "C") && !parse_camera(split, &(scene->cam)))
-		return (free_split(split), free_scene_exit(scene, "invalid camera\n", 1));
-	else if (!ft_strcmp(split[0], "L") && !parse_light((split), &(scene->lights)))
-		return (free_split(split), free_scene_exit(scene, "invalid light\n", 1));
-	else if (is_object(split[0]) && !parse_object(scene, split))
-		return (free_split(split), free_scene_exit(scene, "invalid object\n", 1));
-	else if (ft_strcmp(split[0], "L") && ft_strcmp(split[0], "C") && \
-ft_strcmp(split[0], "A") && !is_object(split[0]))
-		return (free_split(split), free_scene_exit(scene, "invalid line\n", 1));
-	free_split(split);
+	s = split_space(line);
+	if (!s || !s[0])
+		return (free_split(s));
+	else if (!ft_strcmp(s[0], "A") && !parse_ambient(s, &(scene->ambient)))
+		return (free_split(s), free_scene_exit(scene, "invalid ambient\n", 1));
+	else if (!ft_strcmp(s[0], "C") && !parse_camera(s, &(scene->cam)))
+		return (free_split(s), free_scene_exit(scene, "invalid camera\n", 1));
+	else if (!ft_strcmp(s[0], "L") && !parse_light((s), &(scene->lights)))
+		return (free_split(s), free_scene_exit(scene, "invalid light\n", 1));
+	else if (is_object(s[0]) && !parse_object(scene, s))
+		return (free_split(s), free_scene_exit(scene, "invalid object\n", 1));
+	else if (ft_strcmp(s[0], "L") && ft_strcmp(s[0], "C") && \
+ft_strcmp(s[0], "A") && !is_object(s[0]))
+		return (free_split(s), free_scene_exit(scene, "invalid line\n", 1));
+	free_split(s);
 }
 
 void	parse_file(t_scene *scene, char *scene_file)
