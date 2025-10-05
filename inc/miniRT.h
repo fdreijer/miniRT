@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 16:55:31 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 17:43:32 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ t_vector	v_add(t_vector v1, t_vector v2);
 t_vector	v_sub(t_vector v1, t_vector v2);
 t_vector	v_scale(t_vector v, double s);
 int			v_in_bounds(t_vector v, double min, double max);
+void		free_scene_exit(t_scene	*scene, char *msg, int val);
 
 #endif

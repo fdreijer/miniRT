@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 17:01:29 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 17:49:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,17 +294,18 @@ void	parse_line(t_scene *scene, char *line)
 		return ;
 	split = split_space(line);
 	if (!split || !split[0])
-		return (free_split(split));//TODO EXIT
-	if (!ft_strcmp(split[0], "A") && !parse_ambient(split, &(scene->ambient)))
-		return (free_split(split));//EXIT
-	if (!ft_strcmp(split[0], "C") && !parse_camera(split, &(scene->cam)))
-		return (free_split(split));//EXIT
-	if (!ft_strcmp(split[0], "L") && !parse_light((split), &(scene->lights)))
 		return (free_split(split));
-	if (is_object(split[0]) && !parse_object(scene, split))
-		return (free_split(split));
-	else
-		return (free_split(split)); //TODO EXIT
+	else if (!ft_strcmp(split[0], "A") && !parse_ambient(split, &(scene->ambient)))
+		return (free_split(split), free_scene_exit(scene, "invalid ambient\n", 1));
+	else if (!ft_strcmp(split[0], "C") && !parse_camera(split, &(scene->cam)))
+		return (free_split(split), free_scene_exit(scene, "invalid camera\n", 1));
+	else if (!ft_strcmp(split[0], "L") && !parse_light((split), &(scene->lights)))
+		return (free_split(split), free_scene_exit(scene, "invalid light\n", 1));
+	else if (is_object(split[0]) && !parse_object(scene, split))
+		return (free_split(split), free_scene_exit(scene, "invalid object\n", 1));
+	else if (ft_strcmp(split[0], "L") && ft_strcmp(split[0], "C") && \
+ft_strcmp(split[0], "A") && !is_object(split[0]))
+		return (free_split(split), free_scene_exit(scene, "invalid line\n", 1));
 	free_split(split);
 }
 

@@ -12,7 +12,7 @@ INCL = -I inc $(LIBFT_INCL) -I./inc/libft/inc
 
 BUILD_FOLDER = build
 
-SRCS =	src/main.c	src/parsing.c	src/vector.c
+SRCS =	src/main.c	src/parsing.c	src/vector.c	src/free_exit.c
 
 OBJS := $(patsubst src/%.c, $(BUILD_FOLDER)/%.o, $(SRCS))
 
