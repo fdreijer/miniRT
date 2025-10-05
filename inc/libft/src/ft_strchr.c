@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 10:06:24 by mvan-rij          #+#    #+#             */
-/*   Updated: 2025/10/05 08:13:31 by kali             ###   ########.fr       */
+/*   Created: 2025/04/22 13:11:20 by fdreijer          #+#    #+#             */
+/*   Updated: 2025/10/04 19:07:00 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *nptr)
+char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	long	nb;
-	int		sign;
+	int	i;
 
 	i = 0;
-	nb = 0;
-	sign = 1;
-	while (nptr[i] == ' ' || nptr[i] == '\n' || nptr[i] == '\v' \
-|| nptr[i] == '\f' || nptr[i] == '\r' || nptr[i] == '\t')
-		i++;
-	if (nptr[i] == '-')
-		sign = -1;
-	if (nptr[i] == '-' || nptr[i] == '+')
-		i++;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
+	while (s[i])
 	{
-		nb *= 10;
-		nb += nptr[i] - '0';
+		if (s[i] == (unsigned char)c)
+			return ((char *)&s[i]);
 		i++;
 	}
-	return (nb * sign);
+	if (c == 0)
+		return ((char *)&s[i]);
+	return (NULL);
 }
+
+// #include <stdio.h>
+// int main()
+// {
+// 	char c = 0;
+// 	char *str = "bcdaefg";
+// 	printf("%p\n", ft_strchr(str, c));
+// }

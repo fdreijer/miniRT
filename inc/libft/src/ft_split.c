@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:12:33 by fdreijer          #+#    #+#             */
-/*   Updated: 2025/10/04 18:07:56 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 10:57:33 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static	char	*fill_out(char const *s, char c)
 	return (out);
 }
 
-static void	free_split(char **split, int len)
+static void	freesplit(char **split, int len)
 {
 	while (--len >= 0)
 		free(split[len]);
@@ -81,7 +81,7 @@ char	**ft_split(char const *s, char c)
 		{
 			out[++w] = fill_out(s + i, c);
 			if (!out[w])
-				return (free_split(out, w), NULL);
+				return (freesplit(out, w), NULL);
 			while (s[i] && s[i] != c)
 				i++;
 		}

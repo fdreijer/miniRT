@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2025/10/04 18:46:34 by kali             ###   ########.fr       */
+/*   Updated: 2025/10/05 16:55:31 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@
 
 typedef struct s_vector
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }			t_vector;
 
 typedef struct s_color
@@ -40,20 +40,20 @@ typedef struct s_color
 typedef struct s_camera
 {
 	t_vector	pos;
-	t_vector	dir;
-	float		fov;
+	t_vector	normal;
+	double		fov;
 }				t_camera;
 
 typedef struct s_ambient
 {
-	float	ratio;
+	double	ratio;
 	t_color	color;
 }			t_ambient;
 
 typedef struct s_light
 {
 	t_vector		pos;
-	float			brightness;
+	double			brightness;
 	t_color			color;
 	struct s_light	*next;
 }				t_light;
@@ -70,8 +70,8 @@ typedef struct s_material
 	t_color		ambient;
 	t_color 	diffuse;
 	t_color 	specular;
-	float		shine;
-	float		reflectivity;
+	double		shine;
+	double		reflectivity;
 	t_texture	texture;
 	void		*texture_data;
 }				t_material;
@@ -79,23 +79,24 @@ typedef struct s_material
 typedef struct s_sphere
 {
 	t_vector	pos;
-	float		diameter;
+	double		diameter;
 	t_material	*material;
 }				t_sphere;
 
 typedef struct s_plane
 {
-	t_vector	pos;
-	t_vector	normal;
-	t_material	*material;
+	t_vector		pos;
+	t_vector		normal;
+	t_material		*material;
+	struct s_plane		*next;
 }				t_plane;
 
 typedef struct s_cylinder
 {
 	t_vector	pos;
 	t_vector	normal;
-	float		diameter;
-	float		height;
+	double		diameter;
+	double		height;
 	t_material	*material;
 }				t_cylinder;
 
@@ -108,21 +109,16 @@ typedef enum e_type
 
 typedef struct s_object
 {
-	t_type		type;
-	void		*object;
-	t_vector	min_bounds;
-	t_vector	max_bounds;
+	t_type			type;
+	void			*object;
+	t_vector		min_bounds;
+	t_vector		max_bounds;
+	struct s_object	*next;
 }				t_object;
-
-typedef struct s_list
-{
-	t_object		*object;
-	struct s_list	*next;
-}					t_list;
 
 typedef struct s_voxel
 {
-	t_list			*objects;
+	t_object		*objects;
 	t_vector		min_bounds;
 	t_vector		max_bounds;
 }					t_voxel;
@@ -130,9 +126,10 @@ typedef struct s_voxel
 typedef struct s_grid
 {
 	t_voxel			***voxels;
+	t_plane			*planes;
 	t_vector		min_bounds;
 	t_vector		max_bounds;
-	float			cell_size;
+	double			cell_size;
 }					t_grid;
 
 typedef struct s_scene
@@ -141,6 +138,13 @@ typedef struct s_scene
 	t_ambient	ambient;
 	t_light		*lights;
 	t_grid		grid;
+	t_object	*all_objects;
 }				t_scene;
+
+void		parse_file(t_scene *scene, char *scene_file);
+t_vector	v_add(t_vector v1, t_vector v2);
+t_vector	v_sub(t_vector v1, t_vector v2);
+t_vector	v_scale(t_vector v, double s);
+int			v_in_bounds(t_vector v, double min, double max);
 
 #endif

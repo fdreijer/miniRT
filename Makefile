@@ -1,5 +1,5 @@
 NAME = miniRT
-CC = cc -Wall -Werror -Wextra
+CC = cc -Wall -Werror -Wextra -g
 
 LIBFT_PATH = inc/libft
 LIBFT = ./inc/libft/libft.a
@@ -12,7 +12,7 @@ INCL = -I inc $(LIBFT_INCL) -I./inc/libft/inc
 
 BUILD_FOLDER = build
 
-SRCS =	src/main.c
+SRCS =	src/main.c	src/parsing.c	src/vector.c
 
 OBJS := $(patsubst src/%.c, $(BUILD_FOLDER)/%.o, $(SRCS))
 

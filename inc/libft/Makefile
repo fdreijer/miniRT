@@ -1,11 +1,13 @@
 NAME = libft.a
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -I inc
-SRCS =  src/ft_atoi.c	src/ft_calloc.c		src/ft_isspace.c \
-		src/ft_itoa.c	src/ft_memmove.c	src/ft_realloc.c \
-		src/ft_split.c 	src/ft_strcmp.c		src/ft_strjoin.c \
-		src/ft_strlen.c	src/ft_strncmp.c	src/ft_strndup.c \
-		src/ft_min.c
+SRCS =  src/ft_atoi.c		src/ft_calloc.c			src/ft_isspace.c \
+		src/ft_itoa.c		src/ft_memmove.c		src/ft_realloc.c \
+		src/ft_split.c 		src/ft_strcmp.c			src/ft_strjoin.c \
+		src/ft_strlen.c		src/ft_strncmp.c		src/ft_strndup.c \
+		src/ft_min.c		src/ft_strchr.c			src/get_next_line.c \
+		src/split_space.c	src/ft_atof.c			src/ft_isdigit.c
+
 INCLS = inc/libft.h
 
 BUILD_FOLDER = build
