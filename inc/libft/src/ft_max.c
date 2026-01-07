@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_exit.c                                        :+:      :+:    :+:   */
+/*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/05 17:26:49 by kali              #+#    #+#             */
-/*   Updated: 2026/01/06 17:10:37 by kali             ###   ########.fr       */
+/*   Created: 2025/11/23 18:44:57 by kali              #+#    #+#             */
+/*   Updated: 2026/01/06 16:36:01 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-
-void	free_objects(t_object *objects)
+int ft_max(int a, int b)
 {
-	t_object	*next;
-
-	while (objects)
-	{
-		next = objects->next;
-		free(objects->object);
-		free(objects);
-		objects = next;
-	}
+    if (a > b)
+        return (a);
+    return (b);
 }
 
-void	free_scene_exit(t_scene	*scene, char *msg, int val)
+double  ft_dmax(double a, double b)
 {
-	write(2, "Error: ", 7);
-	write(2, msg, ft_strlen(msg));
-	free_objects(scene->all_objects);
-	free(scene);
-	exit(val);
+    if (a > b)
+        return (a);
+    return (b);
 }

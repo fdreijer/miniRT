@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:15 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 16:55:41 by kali             ###   ########.fr       */
+/*   Updated: 2026/01/06 20:22:18 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,34 +40,35 @@ void print_camera(t_camera *c)
     printf("\t%.0f\n\n", c->fov);
 }
 
-void print_lights(t_light *head)
+void print_light(t_light *l)
 {
     printf("#LIGHT\tCOORDINATES\tBRIGHTNESS\tCOLOR\n");
-    while (head)
-    {
-        printf("L\t\t");
-        print_vector(head->pos);
-        printf("\t%.2f\t\t", head->brightness);
-        print_color(head->color);
-        printf("\n");
-        head = head->next;
-    }
-    printf("\n");
+    printf("L\t\t");
+    print_vector(l->pos);
+    printf("\t%.2f\t\t", l->brightness);
+    print_color(l->color);
+    printf("\n\n");
 }
 
-void print_planes(t_plane *head)
+void print_planes(t_scene *scene)
 {
+    t_object *obj = scene->all_objects;
+
     printf("#PLANE\tCOORDINATES\tNORMAL\tCOLOR\n");
-    while (head)
+    while (obj)
     {
-        printf("pl\t\t");
-        print_vector(head->pos);
-        printf("\t");
-        print_vector(head->normal);
-        printf("\t");
-        print_color(head->material->diffuse);
-        printf("\n");
-        head = head->next;
+        if (obj->type == PLANE)
+        {
+            t_plane *p = (t_plane *)obj->object;
+            printf("pl\t\t");
+            print_vector(p->pos);
+            printf("\t");
+            print_vector(p->normal);
+            printf("\t");
+            print_color(p->color); // Changed from material->diffuse to color
+            printf("\n");
+        }
+        obj = obj->next;
     }
     printf("\n");
 }
@@ -85,7 +86,7 @@ void print_spheres(t_scene *scene)
             printf("sp\t\t");
             print_vector(sp->pos);
             printf("\t%.2f\t\t", sp->diameter);
-            print_color(sp->material->diffuse);
+            print_color(sp->color);  // Changed from material->diffuse to color
             printf("\n");
         }
         obj = obj->next;
@@ -108,7 +109,7 @@ void print_cylinders(t_scene *scene)
             printf("\t");
             print_vector(c->normal);
             printf("\t%.2f\t%.2f\t", c->height, c->diameter);
-            print_color(c->material->diffuse);
+            print_color(c->color); // Changed from material->diffuse to color
             printf("\n");
         }
         obj = obj->next;
@@ -120,10 +121,10 @@ void print_scene(t_scene *scene)
 {
     print_ambient(&scene->ambient);
     print_camera(&scene->cam);
-    print_lights(scene->lights);
-    print_planes(scene->grid.planes);
+    print_light(&scene->light);  // Print the single light
     print_spheres(scene);
     print_cylinders(scene);
+    print_planes(scene);
 }
 
 
@@ -136,5 +137,14 @@ int main(void)
 	if (!scene)
 		return (1);
 	parse_file(scene, scene_file);
-	print_scene(scene);
+    scene->image = ft_calloc(sizeof(mlx_image_t), 1);
+    scene->mlx = ft_calloc(sizeof(mlx_t), 1);
+    scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
+    scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
+    // print_scene(scene);
+    generate_rays(scene);
+    mlx_image_to_window(scene->mlx, scene->image, 0, 0);
+    printf("a");
+    print_scene(scene);
+    mlx_loop(scene->mlx);
 }

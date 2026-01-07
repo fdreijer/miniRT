@@ -1,5 +1,5 @@
 NAME = miniRT
-CC = cc -Wall -Werror -Wextra -g
+CC = cc -Wall -Werror -Wextra
 
 LIBFT_PATH = inc/libft
 LIBFT = ./inc/libft/libft.a
@@ -8,11 +8,12 @@ MLXPATH = inc/MLX42
 MLX = inc/MLX42/build/libmlx42.a
 
 LIBFT_INCL = -I inc/libft/inc
-INCL = -I inc $(LIBFT_INCL) -I./inc/libft/inc
+INCL = -I inc $(LIBFT_INCL) -I inc/MLX42/include/MLX42
 
 BUILD_FOLDER = build
 
-SRCS =	src/main.c	src/parsing.c	src/vector.c	src/free_exit.c
+SRCS =	src/main.c	src/parsing.c	src/vector.c	src/free_exit.c	src/intersects.c	src/get_color.c \
+src/rays.c
 
 OBJS := $(patsubst src/%.c, $(BUILD_FOLDER)/%.o, $(SRCS))
 
@@ -22,7 +23,7 @@ libmlx:
 				@cmake -Wno-dev $(MLXPATH) -B $(MLXPATH)/build && make -C $(MLXPATH)/build -j4
 
 $(NAME): $(OBJS) $(LIBFT) Makefile
-				$(CC) $(OBJS) $(LIBFT) $(MLX) $(INCL) -lm -o $(NAME)
+				$(CC) $(OBJS) $(LIBFT) $(MLX) $(INCL) -lm -lglfw -o $(NAME)
 
 $(BUILD_FOLDER)/%.o: src/%.c Makefile | $(BUILD_FOLDER)
 				$(CC) $(INCL) -c -o $@ $<

@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 18:08:19 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 10:56:11 by kali             ###   ########.fr       */
+/*   Updated: 2026/01/06 16:38:29 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ int			ft_isdigit(char c);
 double		ft_atof(char *s);
 char		**split_space(char *str);
 void 		free_split(char **split);
+int         ft_max(int a, int b);
+double      ft_dmax(double a, double b);
 
 #endif

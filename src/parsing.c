@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 18:11:41 by kali             ###   ########.fr       */
+/*   Updated: 2026/01/06 18:52:12 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,30 +85,17 @@ int	parse_camera(char **s, t_camera *c)
 	return (1);
 }
 
-int	parse_light(char **s, t_light **h)
+int	parse_light(char **s, t_light *l)
 {
-	t_light	*l;
-	t_light	*head;
-
 	if (!s || !s[0] || !s[1] || !s[2] || !s[3] || s[4])
 		return (0);
-	head = *h;
-	l = ft_calloc(1, sizeof(t_light));
-	if (!l)
-		return (0);
 	if (!parse_vector(s[1], &(l->pos)))
-		return (free(l), 0);
+		return (0);
 	l->brightness = ft_atof(s[2]);
 	if (l->brightness == INFINITY || l->brightness < 0 || l->brightness > 1)
-		return (free(l), 0);
+		return (0);
 	if (!parse_color(s[3], &(l->color)))
-		return (free(l), 0);
-	while (head && head->next)
-		head = head->next;
-	if (head == NULL)
-		*h = l;
-	else
-		head->next = l;
+		return (0);
 	return (1);
 }
 
@@ -116,38 +103,6 @@ int	is_object(char *str)
 {
 	return (!ft_strcmp(str, "pl") || !ft_strcmp(str, "sp") \
 || !ft_strcmp(str, "cy"));
-}
-
-void	calculate_bounds_sphere(t_object *object, t_sphere *s)
-{
-	double	r;
-
-	r = s->diameter / 2;
-	object->min_bounds = (t_vector){s->pos.x - r, s->pos.y - r, s->pos.z - r};
-	object->max_bounds = (t_vector){s->pos.x + r, s->pos.y + r, s->pos.z + r};
-}
-
-void	calculate_bounds_cylinder(t_object *object, t_cylinder *c)
-{
-	double		r;
-	t_vector	b;
-	t_vector	t;
-
-	r = c->diameter / 2;
-	b = v_sub(c->pos, v_scale(c->normal, c->height / 2.0));
-	t = v_add(c->pos, v_scale(c->normal, c->height / 2.0));
-	object->min_bounds = (t_vector){fmin(b.x, t.x) - r, fmin(b.y, t.y) - \
-r, fmin(b.z, t.z) - r};
-	object->max_bounds = (t_vector){fmax(b.x, t.x) + r, fmax(b.y, t.y) + \
-r, fmax(b.z, t.z) + r};
-}
-
-void	calculate_bounds_obj(t_object *object, void *obj, t_type type)
-{
-	if (type == SPHERE)
-		calculate_bounds_sphere(object, (t_sphere *)obj);
-	else if (type == CYLINDER)
-		calculate_bounds_cylinder(object, (t_cylinder *)obj);
 }
 
 int	add_object(t_scene *scene, void	*obj, t_type type)
@@ -160,7 +115,6 @@ int	add_object(t_scene *scene, void	*obj, t_type type)
 		return (0);
 	object->type = type;
 	object->object = obj;
-	calculate_bounds_obj(object, obj, type);
 	head = scene->all_objects;
 	while (head && head->next)
 		head = head->next;
@@ -171,32 +125,9 @@ int	add_object(t_scene *scene, void	*obj, t_type type)
 	return (1);
 }
 
-t_color	scale_color(t_color c, double s)
-{
-	return ((t_color){fmin(c.r * s, 255), fmin(c.g * s, 255), \
-fmin(c.b * s, 255)});
-}
-
-t_material	*make_material(t_color color)
-{
-	t_material	*m;
-
-	m = ft_calloc(1, sizeof(t_material));
-	if (!m)
-		return (NULL);
-	m->ambient = scale_color(color, 0.2);
-	m->diffuse = scale_color(color, 0.7);
-	m->specular = scale_color((t_color){255, 255, 255}, 0.1);
-	m->shine = 32.0;
-	m->reflectivity = 0.0;
-	m->texture = NONE;
-	return (m);
-}
-
 int	parse_sphere(t_scene *scene, char **s)
 {
 	t_sphere	*sp;
-	t_color		color;
 
 	if (!s || !s[0] || !s[1] || !s[2] || !s[3] || s[4])
 		return (0);
@@ -208,20 +139,16 @@ int	parse_sphere(t_scene *scene, char **s)
 	sp->diameter = ft_atof(s[2]);
 	if (sp->diameter == INFINITY || sp->diameter <= 0)
 		return (free(sp), 0);
-	if (!parse_color(s[3], &color))
-		return (free(sp), 0);
-	sp->material = make_material(color);
-	if (!sp->material)
+	if (!parse_color(s[3], &(sp->color)))
 		return (free(sp), 0);
 	if (!add_object(scene, sp, SPHERE))
-		return (free(sp->material), free(sp), 0);
+		return (free(sp), 0);
 	return (1);
 }
 
 int	parse_cylinder(t_scene *scene, char **s)
 {
 	t_cylinder	*c;
-	t_color		color;
 
 	if (!s || !s[0] || !s[1] || !s[2] || !s[3] || !s[4] || !s[5] || s[6])
 		return (0);
@@ -235,21 +162,16 @@ int	parse_cylinder(t_scene *scene, char **s)
 	c->diameter = ft_atof(s[3]);
 	c->height = ft_atof(s[4]);
 	if (c->diameter == INFINITY || c->diameter < 0 \
-|| c->height == INFINITY || c->height < 0 || !parse_color(s[5], &color))
-		return (free(c), 0);
-	c->material = make_material(color);
-	if (!c->material)
+|| c->height == INFINITY || c->height < 0 || !parse_color(s[5], &(c->color)))
 		return (free(c), 0);
 	if (!add_object(scene, c, CYLINDER))
-		return (free(c->material), free(c), 0);
+		return (free(c), 0);
 	return (1);
 }
 
 int	parse_plane(t_scene *scene, char **s)
 {
 	t_plane	*p;
-	t_color	color;
-	t_plane	*head;
 
 	if (!s || !s[0] || !s[1] || !s[2] || !s[3] || s[4])
 		return (0);
@@ -258,18 +180,10 @@ int	parse_plane(t_scene *scene, char **s)
 		return (free(p), 0);
 	if (!parse_vector(s[2], &(p->normal)) || !check_normal(p->normal))
 		return (free(p), 0);
-	if (!parse_color(s[3], &color))
+	if (!parse_color(s[3], &(p->color)))
 		return (free(p), 0);
-	p->material = make_material(color);
-	if (!p->material)
+	if (!add_object(scene, p, PLANE))
 		return (free(p), 0);
-	head = scene->grid.planes;
-	while (head && head->next)
-		head = head->next;
-	if (head == NULL)
-		scene->grid.planes = p;
-	else
-		head->next = p;
 	return (1);
 }
 
@@ -299,7 +213,7 @@ void	parse_line(t_scene *scene, char *line)
 		return (free_split(s), free_scene_exit(scene, "invalid ambient\n", 1));
 	else if (!ft_strcmp(s[0], "C") && !parse_camera(s, &(scene->cam)))
 		return (free_split(s), free_scene_exit(scene, "invalid camera\n", 1));
-	else if (!ft_strcmp(s[0], "L") && !parse_light((s), &(scene->lights)))
+	else if (!ft_strcmp(s[0], "L") && !parse_light((s), &(scene->light)))
 		return (free_split(s), free_scene_exit(scene, "invalid light\n", 1));
 	else if (is_object(s[0]) && !parse_object(scene, s))
 		return (free_split(s), free_scene_exit(scene, "invalid object\n", 1));

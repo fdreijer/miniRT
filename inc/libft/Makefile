@@ -6,7 +6,8 @@ SRCS =  src/ft_atoi.c		src/ft_calloc.c			src/ft_isspace.c \
 		src/ft_split.c 		src/ft_strcmp.c			src/ft_strjoin.c \
 		src/ft_strlen.c		src/ft_strncmp.c		src/ft_strndup.c \
 		src/ft_min.c		src/ft_strchr.c			src/get_next_line.c \
-		src/split_space.c	src/ft_atof.c			src/ft_isdigit.c
+		src/split_space.c	src/ft_atof.c			src/ft_isdigit.c \
+		src/ft_max.c
 
 INCLS = inc/libft.h
 
