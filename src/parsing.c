@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2026/01/06 18:52:12 by kali             ###   ########.fr       */
+/*   Updated: 2026/01/07 14:54:57 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int	parse_camera(char **s, t_camera *c)
 	c->fov = ft_atof(s[3]);
 	if (c->fov == INFINITY || c->fov < 0 || c->fov > 180)
 		return (0);
+	c->right = v_normalize(v_cross(c->normal, (t_vector){0, 1, 0}));
+    c->up = v_normalize(v_cross(c->right, c->normal));
+	c->tan_half_fov = tan(c->fov * 0.5 * PI / 180.0);
 	return (1);
 }
 

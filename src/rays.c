@@ -1,17 +1,16 @@
 #include "miniRT.h"
 
-t_ray   generate_ray(t_scene *scene, int x, int y)
-{
-    t_ray ray;
+t_ray generate_ray(t_scene *scene, int x, int y) {
+    t_ray   ray;
+    float   horizontal;
+    float   vertical;
 
+    horizontal = (2.0 * x / WIDTH - 1.0) * ASPECT_RATIO;
+    vertical = (1.0 - 2.0 * y / HEIGHT);
     ray.origin = scene->cam.pos;
-    ray.dir = v_normalize(v_add(v_add(v_scale(scene->cam.normal, 1), \
-v_scale(v_normalize(v_cross(scene->cam.normal, (t_vector){0, 1, 0})), \
-(2 * (x + 0.5) / WIDTH - 1) * (WIDTH / HEIGHT) * \
-tan(scene->cam.fov * 0.5 * PI / 180.0))), \
-v_scale(v_normalize(v_cross(v_normalize(v_cross(scene->cam.normal, \
-(t_vector){0, 1, 0})), scene->cam.normal)), (1 - 2 * \
-(y + 0.5) / HEIGHT) * tan(scene->cam.fov * 0.5 * PI / 180.0))));
+    ray.dir = v_normalize(v_add(v_add(scene->cam.normal, \
+v_scale(scene->cam.right, horizontal * scene->cam.tan_half_fov)), \
+v_scale(scene->cam.up, vertical * scene->cam.tan_half_fov)));
 
     return ray;
 }
@@ -43,10 +42,11 @@ t_color trace_ray(t_scene *scene, t_ray ray)
     distance = INFINITY;
     while (obj)
     {
+        intersection.angle = 0;
         if (g_intersects[obj->type](scene, ray, obj, &intersection) && intersection.distance < distance)
         {
             distance = intersection.distance;
-            printf("%d\n", g_get_color[obj->type](obj).b);
+            // printf("%d\n", g_get_color[obj->type](obj).b);
             color = scale_color(scene, g_get_color[obj->type](obj), intersection.angle);
         }
         obj = obj->next;

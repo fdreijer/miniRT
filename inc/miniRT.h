@@ -6,15 +6,16 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/01/07 00:22:41 by kali             ###   ########.fr       */
+/*   Updated: 2026/01/07 23:25:20 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 1250
-# define WIDTH 2500
+# define HEIGHT 1500.0
+# define WIDTH 2500.0
+# define ASPECT_RATIO (WIDTH / HEIGHT)
 
 # define PI 3.1415926535
 
@@ -46,6 +47,9 @@ typedef struct s_camera
 {
 	t_vector	pos;
 	t_vector	normal;
+	t_vector	up;
+	t_vector	right;
+	double		tan_half_fov;
 	double		fov;
 }				t_camera;
 
@@ -145,11 +149,13 @@ void		free_scene_exit(t_scene	*scene, char *msg, int val);
 int			generate_rays(t_scene *scene);
 
 int			intersects_sphere(t_scene *scene, t_ray ray, t_object *this, t_intersection *intersection);
+int			intersects_plane(t_scene *scene, t_ray ray, t_object *this, t_intersection *intersection);
 
 typedef	int	(*intersects)(t_scene *scene ,t_ray ray, t_object *obj, t_intersection *intersection);
 
 static const intersects	g_intersects[] = {
-	[SPHERE] = intersects_sphere
+	[SPHERE] = intersects_sphere,
+	[PLANE] = intersects_plane
 };
 
 void print_vector(t_vector v);
