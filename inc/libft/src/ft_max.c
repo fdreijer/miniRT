@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_max.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 18:44:57 by kali              #+#    #+#             */
-/*   Updated: 2026/01/06 16:36:01 by kali             ###   ########.fr       */
+/*   Updated: 2026/04/07 15:53:13 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int ft_max(int a, int b)
+int	ft_max(int a, int b)
 {
-    if (a > b)
-        return (a);
-    return (b);
+	if (a > b)
+		return (a);
+	return (b);
 }
 
-double  ft_dmax(double a, double b)
+double	ft_dmax(double a, double b)
 {
-    if (a > b)
-        return (a);
-    return (b);
+	if (a > b)
+		return (a);
+	return (b);
 }

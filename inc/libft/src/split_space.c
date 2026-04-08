@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 09:45:58 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 11:12:54 by kali             ###   ########.fr       */
+/*   Updated: 2026/04/07 15:52:46 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ char	**split_space(char *str)
 {
 	char	**split;
 	int		count;
-	
+
 	count = 0;
 	split = ft_calloc(count_words(str) + 1, sizeof(char *));
 	if (!split)
-		return NULL;
+		return (NULL);
 	while (*str)
 	{
 		while (ft_isspace(*str))
 			str++;
 		if (*str)
 		{
-			split[count] =  get_word(&str);
+			split[count] = get_word(&str);
 			if (!split[count])
 				return (free_split(split), NULL);
 			count++;

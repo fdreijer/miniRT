@@ -1,25 +1,37 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_color.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/07 15:36:50 by fdreijer          #+#    #+#             */
+/*   Updated: 2026/04/07 15:37:22 by fdreijer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
-t_color get_color_sphere(t_object *object)
+t_color	get_color_sphere(t_object *object)
 {
-    t_sphere    *sp;
+	t_sphere	*sp;
 
-    sp = (t_sphere *)object->object;
-    return (sp->color);
+	sp = (t_sphere *)object->object;
+	return (sp->color);
 }
 
-t_color get_color_cylinder(t_object *object)
+t_color	get_color_cylinder(t_object *object)
 {
-    t_cylinder    *c;
+	t_cylinder	*c;
 
-    c = (t_cylinder *)object->object;
-    return (c->color);
+	c = (t_cylinder *)object->object;
+	return (c->color);
 }
 
-t_color get_color_plane(t_object *object)
+t_color	get_color_plane(t_object *object)
 {
-    t_plane   *p;
+	t_plane	*p;
 
-    p = (t_plane *)object->object;
-    return (p->color);
+	p = (t_plane *)object->object;
+	return (p->color);
 }

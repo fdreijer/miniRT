@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 18:08:19 by kali              #+#    #+#             */
-/*   Updated: 2026/01/06 16:38:29 by kali             ###   ########.fr       */
+/*   Updated: 2026/04/07 15:51:57 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <math.h>
+
 int			ft_atoi(const char *nptr);
 void		*ft_calloc(size_t nmemb, size_t size);
 int			ft_isspace(char c);
@@ -34,8 +35,8 @@ char		*ft_strchr(const char *s, int c);
 int			ft_isdigit(char c);
 double		ft_atof(char *s);
 char		**split_space(char *str);
-void 		free_split(char **split);
-int         ft_max(int a, int b);
-double      ft_dmax(double a, double b);
+void		free_split(char **split);
+int			ft_max(int a, int b);
+double		ft_dmax(double a, double b);
 
 #endif

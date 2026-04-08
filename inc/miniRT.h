@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/01/07 23:25:20 by kali             ###   ########.fr       */
+/*   Updated: 2026/04/08 15:15:00 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define HEIGHT 1500.0
 # define WIDTH 2500.0
-# define ASPECT_RATIO (WIDTH / HEIGHT)
+# define ASPECT_RATIO 1.66666666667
 
 # define PI 3.1415926535
 
@@ -26,8 +26,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
-
-#include "MLX42.h"
+# include "MLX42.h"
 
 typedef struct s_vector
 {
@@ -91,7 +90,7 @@ typedef struct s_plane
 	t_vector		pos;
 	t_vector		normal;
 	t_color			color;
-	struct s_plane		*next;
+	struct s_plane	*next;
 }				t_plane;
 
 typedef struct s_cylinder
@@ -134,42 +133,37 @@ typedef struct s_scene
 	mlx_image_t		*image;
 }					t_scene;
 
+void						parse_file(t_scene *scene, char *scene_file);
+t_vector					v_add(t_vector v1, t_vector v2);
+t_vector					v_sub(t_vector v1, t_vector v2);
+t_vector					v_scale(t_vector v, double s);
+int							v_in_bounds(t_vector v, double min, double max);
+double						v_dot(t_vector v1, t_vector v2);
+t_vector					v_normalize(t_vector v);
+t_vector					v_cross(t_vector v1, t_vector v2);
+void						free_scene_exit(t_scene	*scene, char *msg, int val);
+int							generate_rays(t_scene *scene);
+int							intersects_sphere(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
+int							intersects_plane(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
+t_color						get_color_sphere(t_object *object);
+t_color						get_color_cylinder(t_object *object);
+t_color						get_color_plane(t_object *object);
+typedef int					(*t_intersects)(t_scene *scene ,t_ray ray, \
+t_object *obj, t_intersection *intersection);
+typedef t_color				(*t_get_color)(t_object *obj);
 
-void		parse_file(t_scene *scene, char *scene_file);
-t_vector	v_add(t_vector v1, t_vector v2);
-t_vector	v_sub(t_vector v1, t_vector v2);
-t_vector	v_scale(t_vector v, double s);
-int			v_in_bounds(t_vector v, double min, double max);
-double		v_dot(t_vector v1, t_vector v2);
-t_vector	v_normalize(t_vector v);
-t_vector	v_cross(t_vector v1, t_vector v2);
-
-void		free_scene_exit(t_scene	*scene, char *msg, int val);
-
-int			generate_rays(t_scene *scene);
-
-int			intersects_sphere(t_scene *scene, t_ray ray, t_object *this, t_intersection *intersection);
-int			intersects_plane(t_scene *scene, t_ray ray, t_object *this, t_intersection *intersection);
-
-typedef	int	(*intersects)(t_scene *scene ,t_ray ray, t_object *obj, t_intersection *intersection);
-
-static const intersects	g_intersects[] = {
-	[SPHERE] = intersects_sphere,
-	[PLANE] = intersects_plane
+static const t_intersects	g_intersects[] = {
+[SPHERE] = intersects_sphere,
+[PLANE] = intersects_plane
 };
 
-void print_vector(t_vector v);
+typedef t_color				(*t_get_color)(t_object *obj);
 
-
-typedef	t_color	(*get_color)(t_object *obj);
-
-t_color get_color_sphere(t_object *object);
-t_color get_color_cylinder(t_object *object);
-t_color get_color_plane(t_object *object);
-
-static const get_color	g_get_color[] = {
-	[SPHERE] = get_color_sphere,
-	[CYLINDER] = get_color_cylinder,
-	[PLANE] = get_color_plane
+static const t_get_color	g_get_color[] = {
+[SPHERE] = get_color_sphere,
+[CYLINDER] = get_color_cylinder,
+[PLANE] = get_color_plane
 };
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 08:12:21 by kali              #+#    #+#             */
-/*   Updated: 2025/10/05 09:46:39 by kali             ###   ########.fr       */
+/*   Updated: 2026/04/07 15:52:11 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ double	ft_atof(char *s)
 	div = 10.0;
 	while (ft_isspace(s[i]))
 		i++;
-	sign = ((s[i] == '+' && ft_isdigit(s[++i])) || 1) \
-- ((s[i] == '-' && s[i++]) * 2);
+	sign = ((s[i] == '+' && s[i++]) || 1);
+	sign -= ((s[i] == '-' && s[i++]) * 2);
 	while (ft_isdigit(s[i]))
 		result = result * 10.0 + (s[i++] - '0');
 	if (s[i] == '.')
@@ -40,7 +40,6 @@ double	ft_atof(char *s)
 		return (INFINITY);
 	return (sign * result);
 }
-
 
 // int main()
 // {
