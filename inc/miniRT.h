@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hariskon <hariskon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/04/08 15:15:00 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:25:31 by hariskon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 1500.0
-# define WIDTH 2500.0
+# define HEIGHT 800.0
+# define WIDTH 800.0
 # define ASPECT_RATIO 1.66666666667
 
 # define PI 3.1415926535
@@ -93,6 +93,16 @@ typedef struct s_plane
 	struct s_plane	*next;
 }				t_plane;
 
+typedef struct s_quadratic
+{
+	double		a;
+	double		b;
+	double		c;
+	double		discriminant;
+	double		t1;
+	double		t2;
+}				t_quadratic;
+
 typedef struct s_cylinder
 {
 	t_vector	pos;
@@ -100,6 +110,7 @@ typedef struct s_cylinder
 	double		diameter;
 	double		height;
 	t_color		color;
+	t_quadratic	q;
 }				t_cylinder;
 
 typedef enum e_type
@@ -145,6 +156,8 @@ void						free_scene_exit(t_scene	*scene, char *msg, int val);
 int							generate_rays(t_scene *scene);
 int							intersects_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
+int							intersects_cylinder(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
 int							intersects_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 t_color						get_color_sphere(t_object *object);
@@ -156,7 +169,8 @@ typedef t_color				(*t_get_color)(t_object *obj);
 
 static const t_intersects	g_intersects[] = {
 [SPHERE] = intersects_sphere,
-[PLANE] = intersects_plane
+[PLANE] = intersects_plane,
+[CYLINDER] = intersects_cylinder
 };
 
 typedef t_color				(*t_get_color)(t_object *obj);
