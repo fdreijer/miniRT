@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hariskon <hariskon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/05/22 15:25:31 by hariskon         ###   ########.fr       */
+/*   Updated: 2026/05/29 15:11:23 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 800.0
-# define WIDTH 800.0
-# define ASPECT_RATIO 1.66666666667
+# define HEIGHT 500.0
+# define WIDTH 1000.0
+# define ASPECT_RATIO 2
 
 # define PI 3.1415926535
 
@@ -95,6 +95,10 @@ typedef struct s_plane
 
 typedef struct s_quadratic
 {
+	t_vector	dir_parallel;
+	t_vector	oc_parallel;
+	t_vector	dir_perp;
+	t_vector	oc_perp;
 	double		a;
 	double		b;
 	double		c;
