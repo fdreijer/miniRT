@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/05/29 15:10:24 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:56:07 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	main(void)
 	char	*scene_file;
 	t_scene	*scene;
 
-	scene_file = "scenes/scene2.rt";
+	scene_file = "scenes/scene.rt";
 	scene = ft_calloc(1, sizeof(t_scene));
 	if (!scene)
 		return (1);

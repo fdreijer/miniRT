@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_color.c                                        :+:      :+:    :+:   */
+/*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:36:50 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/04/07 15:37:22 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:35:09 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,24 @@ t_color	get_color_plane(t_object *object)
 
 	p = (t_plane *)object->object;
 	return (p->color);
+}
+
+void	get_cl_quadratic(t_cylinder *cl, t_ray ray)
+{
+	t_vector	oc;
+	t_vector	dir_parallel;
+	t_vector	oc_parallel;
+
+	oc = v_sub(ray.origin, cl->pos);
+	dir_parallel = v_scale(v_normalize(cl->normal),
+			v_dot(ray.dir, v_normalize(cl->normal)));
+	oc_parallel = v_scale(v_normalize(cl->normal),
+			v_dot(oc, v_normalize(cl->normal)));
+	cl->q.dir_perp = v_sub(ray.dir, dir_parallel);
+	cl->q.oc_perp = v_sub(oc, oc_parallel);
+	cl->q.a = v_dot(cl->q.dir_perp, cl->q.dir_perp);
+	cl->q.b = 2 * v_dot(cl->q.oc_perp, cl->q.dir_perp);
+	cl->q.c = v_dot(cl->q.oc_perp, cl->q.oc_perp)
+		- (cl->diameter / 2.0f) * (cl->diameter / 2.0f);
+	cl->q.discriminant = cl->q.b * cl->q.b - 4.0 * cl->q.a * cl->q.c;
 }

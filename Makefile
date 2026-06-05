@@ -12,7 +12,8 @@ INCL = -I inc $(LIBFT_INCL) -I inc/MLX42/include/MLX42
 
 BUILD_FOLDER = build
 
-SRCS =	src/main.c	src/parsing.c	src/vector.c	src/free_exit.c	src/intersects.c	src/get_color.c \
+SRCS =	src/main.c	src/parsing/parsing1.c	src/parsing/parsing2.c src/parsing/parsing3.c src/vector_helpers/vector1.c \
+src/vector_helpers/vector2.c src/free_exit.c	src/intersects.c src/intersects_cylinder.c src/helpers.c \
 src/rays.c
 
 OBJS := $(patsubst src/%.c, $(BUILD_FOLDER)/%.o, $(SRCS))
@@ -25,11 +26,12 @@ libmlx:
 $(NAME): $(OBJS) $(LIBFT) Makefile
 				$(CC) $(OBJS) $(LIBFT) $(MLX) $(INCL) -lm -lglfw -o $(NAME)
 
-$(BUILD_FOLDER)/%.o: src/%.c Makefile | $(BUILD_FOLDER)
+$(BUILD_FOLDER)/%.o: src/%.c Makefile
+				mkdir -p $(dir $@)
 				$(CC) $(INCL) -c -o $@ $<
 
-$(BUILD_FOLDER):
-				mkdir -p $@
+# $(BUILD_FOLDER):
+# 				mkdir -p $@
 
 libft:
 				make -C $(LIBFT_PATH)

@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/05/29 15:11:23 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:32:47 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,21 @@ typedef struct s_scene
 	mlx_t			*mlx;
 	mlx_image_t		*image;
 }					t_scene;
+
+int							parse_vector(char *str, t_vector *v);
+int							check_normal(t_vector v);
+int							parse_color(char *str, t_color *c);
+int							parse_ambient(char **s, t_ambient *a);
+int							parse_camera(char **s, t_camera *c);
+int							add_object(t_scene *scene, void	*obj, t_type type);
+int							parse_sphere(t_scene *scene, char **s);
+int							is_object(char *str);
+int							parse_light(char **s, t_light *l);
+void						get_cl_quadratic(t_cylinder *cl, t_ray ray);
+void						ray_obstructed(t_scene *scene, t_vector point, \
+t_object *this, t_intersection *intersection);
+void						angle_plane(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
 
 void						parse_file(t_scene *scene, char *scene_file);
 t_vector					v_add(t_vector v1, t_vector v2);
