@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:37:40 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/04/07 15:39:58 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/08 17:50:17 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ t_color	trace_ray(t_scene *scene, t_ray ray)
 	distance = INFINITY;
 	while (obj)
 	{
+		intersection.distance = INFINITY;
 		intersection.angle = 0;
 		if (g_intersects[obj->type](scene, ray, \
 obj, &intersection) && intersection.distance < distance)

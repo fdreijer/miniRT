@@ -6,11 +6,36 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/05 17:12:32 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/08 17:57:13 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+// void	ray_obstructed(t_scene *scene, t_vector point, \
+// t_object *this, t_intersection *intersection)
+// {
+// 	t_object		*obj;
+// 	t_ray			light_ray;
+// 	t_intersection	light_intersection;
+// 	t_vector		light_dir;
+
+// 	light_dir = v_sub(scene->light.pos, point);
+// 	obj = scene->all_objects;
+// 	light_ray.origin = point;
+// 	light_ray.dir = v_normalize(v_sub(scene->light.pos, point));
+// 	while (obj)
+// 	{
+// 		light_intersection.angle = 1;
+// 		if (this != obj && g_intersects[obj->type](scene, light_ray, obj, \
+// &light_intersection) && light_intersection.distance < intersection->distance)
+// 		{
+// 			intersection->angle = 0;
+// 			return ;
+// 		}
+// 		obj = obj->next;
+// 	}
+// }
 
 void	ray_obstructed(t_scene *scene, t_vector point, \
 t_object *this, t_intersection *intersection)
@@ -19,16 +44,19 @@ t_object *this, t_intersection *intersection)
 	t_ray			light_ray;
 	t_intersection	light_intersection;
 	t_vector		light_dir;
+	double			light_distance;
 
 	light_dir = v_sub(scene->light.pos, point);
+	light_distance = sqrt(v_dot(light_dir, light_dir));
 	obj = scene->all_objects;
 	light_ray.origin = point;
-	light_ray.dir = v_normalize(v_sub(scene->light.pos, point));
+	light_ray.dir = v_normalize(light_dir);
 	while (obj)
 	{
+		light_intersection.distance = INFINITY;
 		light_intersection.angle = 1;
 		if (this != obj && g_intersects[obj->type](scene, light_ray, obj, \
-&light_intersection) && light_intersection.distance < intersection->distance)
+&light_intersection) && light_intersection.distance < light_distance)
 		{
 			intersection->angle = 0;
 			return ;
