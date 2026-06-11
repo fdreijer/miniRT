@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/11 16:32:58 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/11 17:27:46 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 2000
-# define WIDTH 2000
+# define HEIGHT 1000
+# define WIDTH 1000
 # define ASPECT_RATIO 1
 
 # define PI 3.1415926535
@@ -166,7 +166,6 @@ void	angle_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 void	angle_cylinder(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
-
 void						parse_file(t_scene *scene, char *scene_file);
 t_vector					v_add(t_vector v1, t_vector v2);
 t_vector					v_sub(t_vector v1, t_vector v2);

@@ -6,7 +6,7 @@
 /*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/11 16:03:01 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/11 17:29:12 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_object *this, t_intersection *intersection)
 	double		c;
 	double		discriminant;
 
+	(void)scene;
 	sp = (t_sphere *)this->object;
 	oc = v_sub(ray.origin, sp->pos);
 	b = 2 * v_dot(oc, ray.dir);
@@ -109,8 +110,6 @@ t_object *this, t_intersection *intersection)
 / 2.0f, (-b - sqrt(discriminant)) / 2.0f);
 	if (intersection->distance <= 0)
 		return (0);
-	if (!intersection->angle)
-		angle_sphere(scene, ray, this, intersection);
 	return (1);
 }
 
@@ -143,12 +142,11 @@ t_object *this, t_intersection *intersection)
 {
 	t_plane	*p;
 
+	(void)scene;
 	p = (t_plane *)this->object;
 	intersection->distance = -v_dot(v_sub(ray.origin, p->pos), p->normal) \
 / v_dot(ray.dir, p->normal);
 	if (intersection->distance <= 0)
 		return (0);
-	if (!intersection->angle)
-		angle_plane(scene, ray, this, intersection);
 	return (1);
 }
