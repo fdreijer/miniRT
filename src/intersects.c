@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/08 17:57:13 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:03:01 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,14 @@ t_object *this, t_intersection *intersection)
 	b = 2 * v_dot(oc, ray.dir);
 	c = v_dot(oc, oc) - ((sp->diameter / 2.0f) * (sp->diameter / 2.0f));
 	discriminant = b * b - 4.0 * c;
+	if (discriminant < 0.0)
+		return (0);
 	if (((-b + sqrt(discriminant)) / 2.0f) > 0 && \
 ((-b - sqrt(discriminant)) / 2.0f) > 0)
-		intersection->distance = fmin(-b + sqrt(discriminant) \
+		intersection->distance = fmin((-b + sqrt(discriminant)) \
 / 2.0f, (-b - sqrt(discriminant)) / 2.0f);
 	else
-		intersection->distance = fmax(-b + sqrt(discriminant) \
+		intersection->distance = fmax((-b + sqrt(discriminant)) \
 / 2.0f, (-b - sqrt(discriminant)) / 2.0f);
 	if (intersection->distance <= 0)
 		return (0);

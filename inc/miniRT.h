@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/05 13:32:47 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/11 15:06:43 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ void						ray_obstructed(t_scene *scene, t_vector point, \
 t_object *this, t_intersection *intersection);
 void						angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
+void	angle_sphere(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
 
 void						parse_file(t_scene *scene, char *scene_file);
 t_vector					v_add(t_vector v1, t_vector v2);
@@ -198,5 +200,14 @@ static const t_get_color	g_get_color[] = {
 [SPHERE] = get_color_sphere,
 [CYLINDER] = get_color_cylinder,
 [PLANE] = get_color_plane
+};
+
+typedef void				(*t_get_angle)(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
+
+static const t_get_angle	g_get_angle[] = {
+[SPHERE] = angle_sphere,
+//[CYLINDER] = angle_cylinder,
+[PLANE] = angle_plane
 };
 #endif
