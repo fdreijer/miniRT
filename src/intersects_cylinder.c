@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersects_cylinder.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:48:27 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/10 15:25:53 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:38:16 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	angle_cylinder_wall(t_scene *scene, t_ray ray,
 	cl = (t_cylinder *)this->object;
 	intersection_point = v_add(ray.origin,
 			v_scale(ray.dir, intersection->distance));
-	normal = v_normalize(v_sub(intersection_point, cl->pos));
+	normal = v_normalize(v_sub(intersection_point, cl->pos,));
 	light_dir = v_normalize(v_sub(scene->light.pos, intersection_point));
 	intersection->angle = v_dot(normal, light_dir);
 	if (intersection->angle < 0)
@@ -83,33 +83,34 @@ v_scale(ray.dir, intersection->distance));
 	ray_obstructed(scene, intersect_point, this, intersection);
 }
 
-void	intersects_cylinder_plane(t_scene *scene, t_ray ray,
+int	intersects_cylinder_plane(t_ray ray,
 	t_object *this, t_intersection *intersection)
 {
 	t_cylinder	*cl;
 	t_vector	plane_normal;
 	t_vector	plane_center;
 	double		hit_distance;
+	double		hit;
 
 	cl = (t_cylinder *)this->object;
+	hit = intersection->distance;
 	plane_normal = cl->normal;
 	plane_center = v_add(cl->pos, v_scale(plane_normal, cl->height / 2.0));
 	hit_distance = -v_dot(v_sub(ray.origin, plane_center), plane_normal)
 		/ v_dot(ray.dir, plane_normal);
-	if (hit_distance > 0 && hit_distance < intersection->distance && hit_cap(cl, ray, hit_distance, plane_center))
-	{
+	if (hit_distance > 0 && hit_distance < intersection->distance
+			&& hit_cap(cl, ray, hit_distance, plane_center))
 		intersection->distance = hit_distance;
-		angle_cl_plane(scene, ray, this, intersection);
-	}
 	plane_normal = v_scale(cl->normal, -1.0);
 	plane_center = v_add(cl->pos, v_scale(plane_normal, cl->height / 2.0));
 	hit_distance = -v_dot(v_sub(ray.origin, plane_center), plane_normal)
 		/ v_dot(ray.dir, plane_normal);
-	if (hit_distance > 0 && hit_distance < intersection->distance && hit_cap(cl, ray, hit_distance, plane_center) )
-	{
+	if (hit_distance > 0 && hit_distance < intersection->distance
+			&& hit_cap(cl, ray, hit_distance, plane_center))
 		intersection->distance = hit_distance;
-		angle_cl_plane(scene, ray, this, intersection);
-	}
+	if (hit != intersection->distance)
+		return (1);
+	return (0);
 }
 
 int	intersects_cylinder(t_scene *scene, t_ray ray, \
@@ -118,7 +119,10 @@ t_object *this, t_intersection *intersection)
 	t_cylinder	*cl;
 	double		sqrt_disc;
 	double		hit;
+	int			obj;
 
+	(void)scene;
+	obj = 0;
 	hit = intersection->distance;
 	cl = (t_cylinder *)this->object;
 	get_cl_quadratic(cl, ray);
@@ -133,10 +137,17 @@ t_object *this, t_intersection *intersection)
 		intersection->distance = cl->q.t1;
 	else if (hits_cl_wall(ray, cl, cl->q.t2))
 		intersection->distance = cl->q.t2;
-	if (!intersection->angle && intersection->distance < INFINITY)
-		angle_cylinder_wall(scene, ray, this, intersection);
-	intersects_cylinder_plane(scene, ray, this, intersection);
+	intersects_cylinder_plane(ray, this, intersection);
 	if (hit != intersection->distance)
 		return (1);
 	return (0);
+}
+
+void	angle_cylinder(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection)
+{
+	if (intersects_cylinder_plane(ray, this, intersection))
+		angle_cl_plane(scene, ray, this, intersection);
+	else
+		angle_cylinder_wall(scene, ray, this, intersection);
 }

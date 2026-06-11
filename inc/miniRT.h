@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/11 15:06:43 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/11 16:32:58 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 500.0
-# define WIDTH 1000.0
-# define ASPECT_RATIO 2
+# define HEIGHT 2000
+# define WIDTH 2000
+# define ASPECT_RATIO 1
 
 # define PI 3.1415926535
 
@@ -164,6 +164,8 @@ void						angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 void	angle_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
+void	angle_cylinder(t_scene *scene, t_ray ray, \
+t_object *this, t_intersection *intersection);
 
 void						parse_file(t_scene *scene, char *scene_file);
 t_vector					v_add(t_vector v1, t_vector v2);
@@ -207,7 +209,11 @@ t_object *this, t_intersection *intersection);
 
 static const t_get_angle	g_get_angle[] = {
 [SPHERE] = angle_sphere,
-//[CYLINDER] = angle_cylinder,
+[CYLINDER] = angle_cylinder,
 [PLANE] = angle_plane
 };
+
+void print_vector(t_vector v);
+void print_color(t_color c);
+
 #endif
