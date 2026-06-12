@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:58:43 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/05 13:22:46 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:54:50 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_cylinder(t_scene *scene, char **s)
 		return (0);
 	if (!parse_vector(s[1], &(c->pos)))
 		return (free(c), 0);
-	if (!parse_vector(s[2], &(c->normal)) || !check_normal(c->normal))
+	if (!parse_vector(s[2], &(c->normal)) || !check_normal(&c->normal))
 		return (free(c), 0);
 	c->diameter = ft_atof(s[3]);
 	c->height = ft_atof(s[4]);
@@ -44,7 +44,7 @@ int	parse_plane(t_scene *scene, char **s)
 	p = ft_calloc(1, sizeof(t_plane));
 	if (!parse_vector(s[1], &(p->pos)))
 		return (free(p), 0);
-	if (!parse_vector(s[2], &(p->normal)) || !check_normal(p->normal))
+	if (!parse_vector(s[2], &(p->normal)) || !check_normal(&p->normal))
 		return (free(p), 0);
 	if (!parse_color(s[3], &(p->color)))
 		return (free(p), 0);

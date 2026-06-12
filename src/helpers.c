@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:36:50 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/11 16:33:55 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/12 18:26:35 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_color	get_color_sphere(t_object *object)
 	// printf("\t%.2f\t%.2f\t", c->height, c->diameter);
 	// print_color(c->color); // Changed from material->diffuse to color
 	// printf("\n");
-
 	sp = (t_sphere *)object->object;
 	return (sp->color);
 }

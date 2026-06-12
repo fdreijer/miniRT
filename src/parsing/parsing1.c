@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2026/06/11 15:39:20 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:57:17 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,20 @@ int	parse_vector(char *str, t_vector *v)
 	return (1);
 }
 
-int	check_normal(t_vector v)
+int	check_normal(t_vector *v)
 {
-	double	len;
+	// old check normal:
+	// double	len;
 
-	if (!v_in_bounds(v, -1.0, 1.0))
+	// if (!v_in_bounds(v, -1.0, 1.0))
+	// 	return (0);
+	// len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+	// if (fabs(len - 1) > 1e-6)
+	// 	return (0);
+	// temporary check normal:
+	if (sqrt(v_dot(*v, *v)) < 1e-9)
 		return (0);
-	len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	if (fabs(len - 1) > 1e-6)
-		return (0);
+	*v = v_normalize(*v);
 	return (1);
 }
 
@@ -77,7 +82,7 @@ int	parse_camera(char **s, t_camera *c)
 		return (0);
 	if (!parse_vector(s[2], &(c->normal)))
 		return (0);
-	if (!check_normal(c->normal))
+	if (!check_normal(&c->normal))
 		return (0);
 	c->fov = ft_atof(s[3]);
 	if (c->fov == INFINITY || c->fov < 0 || c->fov > 180)

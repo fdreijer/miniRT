@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/11 17:27:46 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/12 17:55:44 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ typedef struct s_scene
 }					t_scene;
 
 int							parse_vector(char *str, t_vector *v);
-int							check_normal(t_vector v);
+int							check_normal(t_vector *v);
 int							parse_color(char *str, t_color *c);
 int							parse_ambient(char **s, t_ambient *a);
 int							parse_camera(char **s, t_camera *c);
@@ -162,9 +162,9 @@ void						ray_obstructed(t_scene *scene, t_vector point, \
 t_object *this, t_intersection *intersection);
 void						angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
-void	angle_sphere(t_scene *scene, t_ray ray, \
+void						angle_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
-void	angle_cylinder(t_scene *scene, t_ray ray, \
+void						angle_cylinder(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 void						parse_file(t_scene *scene, char *scene_file);
 t_vector					v_add(t_vector v1, t_vector v2);
@@ -212,7 +212,7 @@ static const t_get_angle	g_get_angle[] = {
 [PLANE] = angle_plane
 };
 
-void print_vector(t_vector v);
-void print_color(t_color c);
+// void print_vector(t_vector v);
+// void print_color(t_color c);
 
 #endif
