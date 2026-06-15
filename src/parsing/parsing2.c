@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:58:43 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/12 17:54:50 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/15 14:28:14 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ ft_strcmp(s[0], "A") && !is_object(s[0]))
 	free_split(s);
 }
 
-void	parse_file(t_scene *scene, char *scene_file)
+int	parse_file(t_scene *scene, char *scene_file)
 {
 	char	*line;
 	int		fd;
 
 	fd = open(scene_file, O_RDONLY);
 	if (fd < 0)
-		return ;
+		return (0);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -105,4 +105,5 @@ void	parse_file(t_scene *scene, char *scene_file)
 		line = get_next_line(fd);
 	}
 	close(fd);
+	return (1);
 }

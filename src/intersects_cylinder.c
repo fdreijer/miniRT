@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:48:27 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/12 18:27:48 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/15 20:42:48 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,17 +83,16 @@ t_object *this, t_intersection *intersection)
 	hit = intersection->distance;
 	cl = (t_cylinder *)this->object;
 	get_cl_quadratic(cl, ray);
-	if (cl->q.a <= 0 || cl->q.discriminant < 0)
-		return (0);
-	sqrt_disc = sqrt(cl->q.discriminant);
-	cl->q.t1 = (-cl->q.b + sqrt_disc) / (2.0 * cl->q.a);
-	cl->q.t2 = (-cl->q.b - sqrt_disc) / (2.0 * cl->q.a);
-	if (hits_cl_wall(ray, cl, cl->q.t1) && hits_cl_wall(ray, cl, cl->q.t2))
-		intersection->distance = fmin(cl->q.t1, cl->q.t2);
-	else if (hits_cl_wall(ray, cl, cl->q.t1))
-		intersection->distance = cl->q.t1;
-	else if (hits_cl_wall(ray, cl, cl->q.t2))
-		intersection->distance = cl->q.t2;
+	if (!(cl->q.a < 1e-6 || cl->q.discriminant < 0))
+	{
+		sqrt_disc = sqrt(cl->q.discriminant);
+		cl->q.t = (-cl->q.b + sqrt_disc) / (2.0 * cl->q.a);
+		if (hits_cl_wall(ray, cl, cl->q.t) && cl->q.t < intersection->distance)
+			intersection->distance = cl->q.t;
+		cl->q.t = (-cl->q.b - sqrt_disc) / (2.0 * cl->q.a);
+		if (hits_cl_wall(ray, cl, cl->q.t) && cl->q.t < intersection->distance)
+			intersection->distance = cl->q.t;
+	}
 	intersects_cylinder_plane(ray, this, intersection);
 	if (hit != intersection->distance)
 		return (1);
@@ -112,7 +111,7 @@ t_object *this, t_intersection *intersection)
 	cl = (t_cylinder *)this->object;
 	p = v_add(ray.origin, v_scale(ray.dir, intersection->distance));
 	s = v_dot(v_sub(p, cl->pos), cl->normal);
-	if (fabs(s - cl->height / 2.0) < 1e-6 || fabs(s + cl->height / 2.0) < 1e-6)
+	if (fabs(s - cl->height / 2.0) < 1e-4 || fabs(s + cl->height / 2.0) < 1e-4)
 	{
 		if (v_dot(cl->normal, ray.dir) > 0)
 			normal = v_scale(cl->normal, -1.0);

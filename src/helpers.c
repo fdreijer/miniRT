@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:36:50 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/12 18:26:35 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/15 20:37:33 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ void	get_cl_quadratic(t_cylinder *cl, t_ray ray)
 	t_vector	oc_parallel;
 
 	oc = v_sub(ray.origin, cl->pos);
-	dir_parallel = v_scale(v_normalize(cl->normal),
-			v_dot(ray.dir, v_normalize(cl->normal)));
-	oc_parallel = v_scale(v_normalize(cl->normal),
-			v_dot(oc, v_normalize(cl->normal)));
+	dir_parallel = v_scale(cl->normal,
+			v_dot(ray.dir, cl->normal));
+	oc_parallel = v_scale(cl->normal, v_dot(oc, cl->normal));
 	cl->q.dir_perp = v_sub(ray.dir, dir_parallel);
 	cl->q.oc_perp = v_sub(oc, oc_parallel);
 	cl->q.a = v_dot(cl->q.dir_perp, cl->q.dir_perp);

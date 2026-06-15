@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/12 18:27:16 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/15 14:27:29 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,19 @@
 // 	print_planes(scene);
 // }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	char	*scene_file;
 	t_scene	*scene;
 
-	scene_file = "scenes/scene4.rt";
+	if (argc != 2)
+		return (write(2, "wrong input", 11), 1);
+	scene_file = argv[1];
 	scene = ft_calloc(1, sizeof(t_scene));
 	if (!scene)
 		return (1);
-	parse_file(scene, scene_file);
+	if (!parse_file(scene, scene_file))
+		free_scene_exit(scene, "invalid scene\n", 1);
 	scene->image = ft_calloc(sizeof(mlx_image_t), 1);
 	scene->mlx = ft_calloc(sizeof(mlx_t), 1);
 	scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
