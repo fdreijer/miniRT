@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/15 20:27:58 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/16 17:39:05 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,13 @@ t_object *this, t_intersection *intersection)
 	sp = (t_sphere *)this->object;
 	intersect_point = v_add(ray.origin, \
 v_scale(ray.dir, intersection->distance));
-	normal = v_normalize(v_sub(intersect_point, sp->pos));
+	if (sqrt(v_dot(v_sub(sp->pos, intersect_point), \
+v_sub(sp->pos, intersect_point))) \
+<= sqrt(v_dot(v_sub(sp->pos, scene->light.pos), \
+v_sub(sp->pos, scene->light.pos))))
+		normal = v_normalize(v_sub(intersect_point, sp->pos));
+	else
+		normal = v_normalize(v_sub(sp->pos, intersect_point));
 	light_dir = v_normalize(v_sub(scene->light.pos, intersect_point));
 	intersection->angle = v_dot(normal, light_dir);
 	if (intersection->angle < 0)
