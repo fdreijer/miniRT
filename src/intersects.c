@@ -6,11 +6,36 @@
 /*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/17 14:43:21 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/17 15:57:46 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+// void	ray_obstructed(t_scene *scene, t_vector point, \
+// t_object *this, t_intersection *intersection)
+// {
+// 	t_object		*obj;
+// 	t_ray			light_ray;
+// 	t_intersection	light_intersection;
+// 	t_vector		light_dir;
+
+// 	light_dir = v_sub(scene->light.pos, point);
+// 	obj = scene->all_objects;
+// 	light_ray.origin = point;
+// 	light_ray.dir = v_normalize(v_sub(scene->light.pos, point));
+// 	while (obj)
+// 	{
+// 		light_intersection.angle = 1;
+// 		if (this != obj && g_intersects[obj->type](scene, light_ray, obj, \
+// &light_intersection) && light_intersection.distance < intersection->distance)
+// 		{
+// 			intersection->angle = 0;
+// 			return ;
+// 		}
+// 		obj = obj->next;
+// 	}
+// }
 
 void	ray_obstructed(t_scene *scene, t_vector point, \
 t_intersection *intersection, t_vector normal)
@@ -39,6 +64,31 @@ t_intersection *intersection, t_vector normal)
 		obj = obj->next;
 	}
 }
+
+//void	angle_sphere(t_scene *scene, t_ray ray, \
+//t_object *this, t_intersection *intersection)
+//{
+//	t_sphere	*sp;
+//	t_vector	intersect_point;
+//	t_vector	normal;
+//	t_vector	light_dir;
+
+//	sp = (t_sphere *)this->object;
+//	intersect_point = v_add(ray.origin, \
+//v_scale(ray.dir, intersection->distance));
+//	if (sqrt(v_dot(v_sub(sp->pos, intersect_point), \
+//v_sub(sp->pos, intersect_point))) \
+//<= sqrt(v_dot(v_sub(sp->pos, scene->light.pos), \
+//v_sub(sp->pos, scene->light.pos))))
+//		normal = v_normalize(v_sub(intersect_point, sp->pos));
+//	else
+//		normal = v_normalize(v_sub(sp->pos, intersect_point));
+//	light_dir = v_normalize(v_sub(scene->light.pos, intersect_point));
+//	intersection->angle = v_dot(normal, light_dir);
+//	if (intersection->angle < 0)
+//		intersection->angle = 0;
+//	ray_obstructed(scene, intersect_point, intersection, normal);
+//}
 
 void	angle_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection)
@@ -78,17 +128,19 @@ t_object *this, t_intersection *intersection)
 	discriminant = b * b - 4.0 * c;
 	if (discriminant < 0.0)
 		return (0);
-	if (((-b + sqrt(discriminant)) / 2.0f) > 0 && \
-((-b - sqrt(discriminant)) / 2.0f) > 0)
-		intersection->distance = fmin((-b + sqrt(discriminant)) \
-/ 2.0f, (-b - sqrt(discriminant)) / 2.0f);
+	discriminant = sqrt(discriminant);
+	if (((-b + discriminant) / 2.0f) > 0 && \
+((-b - discriminant) / 2.0f) > 0)
+		intersection->distance = fmin((-b + discriminant) \
+/ 2.0f, (-b - discriminant) / 2.0f);
 	else
-		intersection->distance = fmax((-b + sqrt(discriminant)) \
-/ 2.0f, (-b - sqrt(discriminant)) / 2.0f);
+		intersection->distance = fmax((-b + discriminant) \
+/ 2.0f, (-b - discriminant) / 2.0f);
 	if (intersection->distance <= 0)
 		return (0);
 	return (1);
 }
+
 
 void	angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection)

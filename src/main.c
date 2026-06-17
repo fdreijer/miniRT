@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/15 14:27:29 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/17 15:44:10 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,40 @@
 // 	print_planes(scene);
 // }
 
+#include <sys/time.h>
+
+static double	now_ms(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0);
+}
+
+void	key_down(t_scene *scene)
+{
+	if (mlx_is_key_down(scene->mlx, MLX_KEY_UP))
+		scene->cam.pos.x += 1;
+	if (mlx_is_key_down(scene->mlx, MLX_KEY_DOWN))
+		scene->cam.pos.x -= 1;
+	if (mlx_is_key_down(scene->mlx, MLX_KEY_LEFT))
+		scene->cam.pos.y += 1;
+	if (mlx_is_key_down(scene->mlx, MLX_KEY_RIGHT))
+		scene->cam.pos.y -= 1;
+}
+
+void	ft_hook(void *param)
+{
+	t_scene	*scene;
+
+	scene = (t_scene *)param;
+	key_down(scene);
+	double t = now_ms();
+	generate_rays(scene);
+	fprintf(stderr, "frame time: %.1f ms\n", now_ms() - t);
+}
+
+
 int	main(int argc, char **argv)
 {
 	char	*scene_file;
@@ -138,15 +172,21 @@ int	main(int argc, char **argv)
 	scene = ft_calloc(1, sizeof(t_scene));
 	if (!scene)
 		return (1);
+	double t = now_ms();
 	if (!parse_file(scene, scene_file))
 		free_scene_exit(scene, "invalid scene\n", 1);
+	fprintf(stderr, "parse: %.1f ms\n", now_ms() - t); t = now_ms();
 	scene->image = ft_calloc(sizeof(mlx_image_t), 1);
 	scene->mlx = ft_calloc(sizeof(mlx_t), 1);
 	scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
-	// print_scene(scene);
-	generate_rays(scene);
+	fprintf(stderr, "mlx init: %.1f ms\n", now_ms() - t); t = now_ms();
+	//t = now_ms();
+	//generate_rays(scene);
 	mlx_image_to_window(scene->mlx, scene->image, 0, 0);
+	//fprintf(stderr, "first render: %.1f ms\n", now_ms() - t);
+	// print_scene(scene);
+	mlx_loop_hook(scene->mlx, ft_hook, scene);
 	printf("a");
 	mlx_loop(scene->mlx);
 }
