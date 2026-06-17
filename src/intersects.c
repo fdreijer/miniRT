@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersects.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:22 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/17 15:57:46 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/17 16:05:43 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ t_object *this, t_intersection *intersection)
 		return (0);
 	return (1);
 }
-
 
 void	angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection)

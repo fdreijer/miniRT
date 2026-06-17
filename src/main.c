@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/17 15:44:10 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/17 17:39:21 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,6 @@ void	ft_hook(void *param)
 	generate_rays(scene);
 	fprintf(stderr, "frame time: %.1f ms\n", now_ms() - t);
 }
-
 
 int	main(int argc, char **argv)
 {

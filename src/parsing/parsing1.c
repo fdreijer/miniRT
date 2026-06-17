@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2026/06/12 17:57:17 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/17 17:54:09 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	parse_camera(char **s, t_camera *c)
 		return (0);
 	if (!check_normal(&c->normal))
 		return (0);
+	if (c->normal.y == 1 || c->normal.y == -1)
+		c->normal.z = 0.0001;
 	c->fov = ft_atof(s[3]);
 	if (c->fov == INFINITY || c->fov < 0 || c->fov > 180)
 		return (0);
