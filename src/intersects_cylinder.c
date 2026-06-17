@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersects_cylinder.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:48:27 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/15 20:42:48 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/17 14:43:25 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,19 +111,18 @@ t_object *this, t_intersection *intersection)
 	cl = (t_cylinder *)this->object;
 	p = v_add(ray.origin, v_scale(ray.dir, intersection->distance));
 	s = v_dot(v_sub(p, cl->pos), cl->normal);
-	if (fabs(s - cl->height / 2.0) < 1e-4 || fabs(s + cl->height / 2.0) < 1e-4)
-	{
-		if (v_dot(cl->normal, ray.dir) > 0)
-			normal = v_scale(cl->normal, -1.0);
-		else
-			normal = cl->normal;
-	}
+	if (fabs(s - cl->height / 2.0) < 1e-4)
+		normal = v_scale(cl->normal, -1.0);
+	else if (fabs(s + cl->height / 2.0) < 1e-4)
+		normal = cl->normal;
 	else
 		normal = v_normalize(v_sub(v_sub(p, cl->pos), v_scale(cl->normal, \
 v_dot(v_sub(p, cl->pos), cl->normal))));
+	if (v_dot(normal, ray.dir) > 0)
+		normal = v_scale(normal, -1.0);
 	light_dir = v_normalize(v_sub(scene->light.pos, p));
 	intersection->angle = v_dot(normal, light_dir);
 	if (intersection->angle < 0)
 		intersection->angle = 0;
-	ray_obstructed(scene, p, this, intersection);
+	ray_obstructed(scene, p, intersection, normal);
 }

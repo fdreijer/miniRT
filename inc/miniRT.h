@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/15 20:42:23 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/17 13:59:06 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int							is_object(char *str);
 int							parse_light(char **s, t_light *l);
 void						get_cl_quadratic(t_cylinder *cl, t_ray ray);
 void						ray_obstructed(t_scene *scene, t_vector point, \
-t_object *this, t_intersection *intersection);
+t_intersection *intersection, t_vector normal);
 void						angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 void						angle_sphere(t_scene *scene, t_ray ray, \
