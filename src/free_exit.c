@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_exit.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 17:26:49 by kali              #+#    #+#             */
-/*   Updated: 2026/01/06 17:10:37 by kali             ###   ########.fr       */
+/*   Updated: 2026/06/19 15:18:46 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,12 @@ void	free_scene_exit(t_scene	*scene, char *msg, int val)
 	free_objects(scene->all_objects);
 	free(scene);
 	exit(val);
+}
+
+void free_exit (t_scene	*scene)
+{
+	free_objects(scene->all_objects);
+	free(scene->image);
+	free(scene->mlx);
+	free(scene);
 }

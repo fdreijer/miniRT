@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/19 15:09:54 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:19:07 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,4 +212,8 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(scene->mlx, ft_hook, scene);
 	printf("a");
 	mlx_loop(scene->mlx);
+	mlx_delete_image(scene->mlx, scene->image);
+	mlx_close_window(scene->mlx);
+	mlx_terminate(scene->mlx);
+	free_exit(scene);
 }

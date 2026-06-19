@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/17 15:51:19 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:20:09 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ typedef struct s_scene
 	mlx_image_t		*image;
 }					t_scene;
 
+void						free_exit(t_scene *scene);
 int							parse_vector(char *str, t_vector *v);
 int							check_normal(t_vector *v);
 int							parse_color(char *str, t_color *c);
