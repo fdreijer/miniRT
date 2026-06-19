@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/05 17:26:49 by kali              #+#    #+#             */
-/*   Updated: 2026/06/19 15:48:12 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:16:37 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	free_scene_exit(t_scene	*scene, int fd, char *msg, int val)
 	exit(val);
 }
 
-void free_exit (t_scene	*scene)
+void	free_exit(t_scene *scene)
 {
 	free_objects(scene->all_objects);
 	free(scene);

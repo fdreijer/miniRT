@@ -1,5 +1,5 @@
 NAME = miniRT
-CC = cc -Wall -Werror -Wextra
+CC = cc -Wall -Werror -Wextra -g
 
 LIBFT_PATH = inc/libft
 LIBFT = ./inc/libft/libft.a

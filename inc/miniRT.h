@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/19 15:38:58 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:24:07 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int							is_object(char *str);
 int							parse_light(char **s, t_light *l);
 void						get_cl_quadratic(t_cylinder *cl, t_ray ray);
 void						ray_obstructed(t_scene *scene, t_vector point, \
-	t_intersection *intersection, t_vector normal);
+t_intersection *intersection, t_vector normal);
 void						angle_plane(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
 void						angle_sphere(t_scene *scene, t_ray ray, \
@@ -174,7 +174,8 @@ int							v_in_bounds(t_vector v, double min, double max);
 double						v_dot(t_vector v1, t_vector v2);
 t_vector					v_normalize(t_vector v);
 t_vector					v_cross(t_vector v1, t_vector v2);
-void						free_scene_exit(t_scene	*scene, int fd, char *msg, int val);
+void						free_scene_exit(t_scene	*scene, int fd, \
+char *msg, int val);
 int							generate_rays(t_scene *scene);
 int							intersects_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);
@@ -211,8 +212,5 @@ static const t_get_angle	g_get_angle[] = {
 [CYLINDER] = angle_cylinder,
 [PLANE] = angle_plane
 };
-
-// void print_vector(t_vector v);
-// void print_color(t_color c);
 
 #endif

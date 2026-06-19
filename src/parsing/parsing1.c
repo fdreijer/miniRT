@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2026/06/19 14:59:41 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:18:17 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,6 @@ int	parse_vector(char *str, t_vector *v)
 
 int	check_normal(t_vector *v)
 {
-	// old check normal:
-	// double	len;
-
-	// if (!v_in_bounds(v, -1.0, 1.0))
-	// 	return (0);
-	// len = sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-	// if (fabs(len - 1) > 1e-6)
-	// 	return (0);
-	// temporary check normal:
 	if (sqrt(v_dot(*v, *v)) < 1e-9)
 		return (0);
 	*v = v_normalize(*v);
@@ -64,7 +55,7 @@ c->b > 255)
 
 int	parse_ambient(char **s, t_ambient *a)
 {
-	static int i = 0;
+	static int	i = 0;
 
 	if (i)
 		return (0);
@@ -81,7 +72,7 @@ int	parse_ambient(char **s, t_ambient *a)
 
 int	parse_camera(char **s, t_camera *c)
 {
-	static int i = 0;
+	static int	i = 0;
 
 	if (i)
 		return (0);

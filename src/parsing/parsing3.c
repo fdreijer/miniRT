@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/05 12:59:25 by hkonstan          #+#    #+#             */
-/*   Updated: 2026/06/18 17:27:13 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:17:12 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	parse_light(char **s, t_light *l)
 {
-	static int i = 0;
+	static int	i = 0;
 
 	if (i)
 		return (0);

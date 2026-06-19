@@ -6,7 +6,7 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:37:40 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/15 21:08:05 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:16:05 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,39 +83,6 @@ g_get_color[closest->type](closest), hit.angle);
 	}
 	return (color);
 }
-
-// t_color	trace_ray(t_scene *scene, t_ray ray)
-// {
-// 	t_color			color;
-// 	t_object		*obj;
-// 	t_object		*closest_obj;
-// 	t_intersection	intersection;
-// 	double			distance;
-
-// 	color = (t_color){0, 0, 0};
-// 	obj = scene->all_objects;
-// 	distance = INFINITY;
-// 	closest_obj = NULL;
-// 	while (obj)
-// 	{
-// 		intersection.distance = INFINITY;
-// 		if (g_intersects[obj->type](scene, ray, \
-// obj, &intersection) && intersection.distance < distance)
-// 		{
-// 			closest_obj = obj;
-// 			distance = intersection.distance;
-// 		}
-// 		obj = obj->next;
-// 	}
-// 	intersection.angle = 0;
-// 	intersection.distance = distance;
-// 	if (closest_obj)
-// 	{
-// 		g_get_angle[closest_obj->type](scene, ray, closest_obj, &intersection);
-// 		color = scale_color(scene, g_get_color[closest_obj->type](closest_obj), intersection.angle);
-// 	}
-// 	return (color);
-// }
 
 int	generate_rays(t_scene *scene)
 {

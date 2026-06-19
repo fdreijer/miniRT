@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:36:50 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/17 15:55:07 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:16:24 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,6 @@ t_color	get_color_sphere(t_object *object)
 {
 	t_sphere	*sp;
 
-	// t_cylinder *c = (t_cylinder *)object->object;
-	// printf("cy\t\t");
-	// print_vector(c->pos);
-	// printf("\t");
-	// print_vector(c->normal);
-	// printf("\t%.2f\t%.2f\t", c->height, c->diameter);
-	// print_color(c->color); // Changed from material->diffuse to color
-	// printf("\n");
 	sp = (t_sphere *)object->object;
 	return (sp->color);
 }
