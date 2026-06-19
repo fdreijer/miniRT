@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/17 17:39:21 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:09:54 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,14 +160,40 @@ void	ft_hook(void *param)
 	fprintf(stderr, "frame time: %.1f ms\n", now_ms() - t);
 }
 
+int	str_ends_with(char *s1, char *s2)
+{
+	int	len1;
+	int	len2;
+	int	i;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	if (len1 < len2)
+		return (0);
+	i = len2;
+	while (i)
+	{
+		if (s1[len1 - len2 + i - 1] != s2[i - 1])
+			return (0);
+		i--;
+	}
+	return (1);
+}
+
+int validate_args(int argc, char **argv, char **scene_file){
+	if (argc != 2 || !argv || !argv[1] || !str_ends_with(argv[1], ".rt"))
+		return (0);
+	*scene_file = argv[1];
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	char	*scene_file;
-	t_scene	*scene;
+	t_scene	*scene = {0};
 
-	if (argc != 2)
-		return (write(2, "wrong input", 11), 1);
-	scene_file = argv[1];
+	if (!validate_args(argc, argv, &scene_file))
+		return (write(2, "Invalid file\n", 13), 1);
 	scene = ft_calloc(1, sizeof(t_scene));
 	if (!scene)
 		return (1);
@@ -175,8 +201,6 @@ int	main(int argc, char **argv)
 	if (!parse_file(scene, scene_file))
 		free_scene_exit(scene, "invalid scene\n", 1);
 	fprintf(stderr, "parse: %.1f ms\n", now_ms() - t); t = now_ms();
-	scene->image = ft_calloc(sizeof(mlx_image_t), 1);
-	scene->mlx = ft_calloc(sizeof(mlx_t), 1);
 	scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
 	fprintf(stderr, "mlx init: %.1f ms\n", now_ms() - t); t = now_ms();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 17:11:12 by kali              #+#    #+#             */
-/*   Updated: 2026/06/17 17:54:09 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 14:59:41 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ c->b > 255)
 
 int	parse_ambient(char **s, t_ambient *a)
 {
+	static int i = 0;
+
+	if (i)
+		return (0);
+	i = 1;
 	if (!s || !s[0] || !s[1] || !s[2] || s[3])
 		return (0);
 	a->ratio = ft_atof(s[1]);
@@ -76,6 +81,11 @@ int	parse_ambient(char **s, t_ambient *a)
 
 int	parse_camera(char **s, t_camera *c)
 {
+	static int i = 0;
+
+	if (i)
+		return (0);
+	i = 1;
 	if (!s || !s[0] || !s[1] || !s[2] || !s[3] || s[4])
 		return (0);
 	if (!parse_vector(s[1], &(c->pos)))
