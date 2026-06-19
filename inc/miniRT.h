@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/04 16:46:57 by kali              #+#    #+#             */
-/*   Updated: 2026/06/19 15:20:09 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:38:58 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define HEIGHT 1000
-# define WIDTH 1000
+# define HEIGHT 100
+# define WIDTH 100
 # define ASPECT_RATIO 1
 
 # define PI 3.1415926535
@@ -174,7 +174,7 @@ int							v_in_bounds(t_vector v, double min, double max);
 double						v_dot(t_vector v1, t_vector v2);
 t_vector					v_normalize(t_vector v);
 t_vector					v_cross(t_vector v1, t_vector v2);
-void						free_scene_exit(t_scene	*scene, char *msg, int val);
+void						free_scene_exit(t_scene	*scene, int fd, char *msg, int val);
 int							generate_rays(t_scene *scene);
 int							intersects_sphere(t_scene *scene, t_ray ray, \
 t_object *this, t_intersection *intersection);

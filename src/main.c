@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/19 15:19:07 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:40:27 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ int	main(int argc, char **argv)
 		return (1);
 	double t = now_ms();
 	if (!parse_file(scene, scene_file))
-		free_scene_exit(scene, "invalid scene\n", 1);
+		free_scene_exit(scene, 0, "invalid scene\n", 1);
 	fprintf(stderr, "parse: %.1f ms\n", now_ms() - t); t = now_ms();
 	scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
