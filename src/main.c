@@ -6,7 +6,7 @@
 /*   By: fdreijer <fdreijer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/19 15:40:27 by fdreijer         ###   ########.fr       */
+/*   Updated: 2026/06/19 16:11:15 by fdreijer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,27 +137,13 @@ static double	now_ms(void)
 	return (tv.tv_sec * 1000.0 + tv.tv_usec / 1000.0);
 }
 
-void	key_down(t_scene *scene)
-{
-	if (mlx_is_key_down(scene->mlx, MLX_KEY_UP))
-		scene->cam.pos.x += 1;
-	if (mlx_is_key_down(scene->mlx, MLX_KEY_DOWN))
-		scene->cam.pos.x -= 1;
-	if (mlx_is_key_down(scene->mlx, MLX_KEY_LEFT))
-		scene->cam.pos.y += 1;
-	if (mlx_is_key_down(scene->mlx, MLX_KEY_RIGHT))
-		scene->cam.pos.y -= 1;
-}
-
 void	ft_hook(void *param)
 {
 	t_scene	*scene;
 
 	scene = (t_scene *)param;
-	key_down(scene);
-	double t = now_ms();
-	generate_rays(scene);
-	fprintf(stderr, "frame time: %.1f ms\n", now_ms() - t);
+	if (mlx_is_key_down(scene->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(scene->mlx);
 }
 
 int	str_ends_with(char *s1, char *s2)
@@ -187,10 +173,18 @@ int validate_args(int argc, char **argv, char **scene_file){
 	return (1);
 }
 
+void	close_hook(void *param)
+{
+	t_scene	*scene;
+
+	scene = (t_scene *)param;
+	mlx_close_window(scene->mlx);
+}
+
 int	main(int argc, char **argv)
 {
 	char	*scene_file;
-	t_scene	*scene = {0};
+	t_scene	*scene;
 
 	if (!validate_args(argc, argv, &scene_file))
 		return (write(2, "Invalid file\n", 13), 1);
@@ -204,13 +198,10 @@ int	main(int argc, char **argv)
 	scene->mlx = mlx_init(WIDTH, HEIGHT, "MLX42", false);
 	scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
 	fprintf(stderr, "mlx init: %.1f ms\n", now_ms() - t); t = now_ms();
-	//t = now_ms();
-	//generate_rays(scene);
 	mlx_image_to_window(scene->mlx, scene->image, 0, 0);
-	//fprintf(stderr, "first render: %.1f ms\n", now_ms() - t);
-	// print_scene(scene);
+	generate_rays(scene);
 	mlx_loop_hook(scene->mlx, ft_hook, scene);
-	printf("a");
+	mlx_close_hook(scene->mlx, close_hook, scene);
 	mlx_loop(scene->mlx);
 	mlx_delete_image(scene->mlx, scene->image);
 	mlx_close_window(scene->mlx);
