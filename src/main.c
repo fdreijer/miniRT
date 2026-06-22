@@ -6,18 +6,18 @@
 /*   By: hkonstan <hkonstan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:34:28 by fdreijer          #+#    #+#             */
-/*   Updated: 2026/06/19 16:26:45 by hkonstan         ###   ########.fr       */
+/*   Updated: 2026/06/22 10:04:57 by hkonstan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	ft_hook(void *param)
+void	ft_hook(mlx_key_data_t keydata, void *param)
 {
 	t_scene	*scene;
 
 	scene = (t_scene *)param;
-	if (mlx_is_key_down(scene->mlx, MLX_KEY_ESCAPE))
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(scene->mlx);
 }
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	scene->image = mlx_new_image(scene->mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(scene->mlx, scene->image, 0, 0);
 	generate_rays(scene);
-	mlx_loop_hook(scene->mlx, ft_hook, scene);
+	mlx_key_hook(scene->mlx, &ft_hook, scene);
 	mlx_close_hook(scene->mlx, close_hook, scene);
 	mlx_loop(scene->mlx);
 	mlx_delete_image(scene->mlx, scene->image);
